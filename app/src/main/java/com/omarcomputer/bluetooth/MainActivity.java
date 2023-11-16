@@ -68,8 +68,9 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 binding.BTEnabled.setChecked(false);
 
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+               Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 enableBluetoothLauncher.launch(enableBtIntent);
+               // startActivity(enableBtIntent);
             }
         });
 
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     if (pairedDevices.size() > 0) {
                         String list = "";
                         for (BluetoothDevice device : pairedDevices) {
-                            list += device.getName() + ":" + device.getAddress();
+                            list += device.getName() + ":" + device.getAddress() + "\n";
                         }
                         binding.txtDeviceList.setText(list);
                     }
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
                 IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
                 registerReceiver(receiver, filter);
+                binding.txtDeviceFoundList.setText("");
                 bluetoothAdapter.startDiscovery();
             }
         });
@@ -126,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     String deviceName = device.getName();
                     String macAddress = device.getAddress();
                     String out = binding.txtDeviceFoundList.getText().toString();
-                    out += deviceName + ": " + macAddress;
+                    out += deviceName + ": " + macAddress + "\n";
                     binding.txtDeviceFoundList.setText(out);
                 }
 
